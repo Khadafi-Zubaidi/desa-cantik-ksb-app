@@ -1,0 +1,8 @@
+web
+├── CSS
+├── HTML
+│ └── test.html
+└── image
+ └── picture
+ 
+background: url(../image/picture);
