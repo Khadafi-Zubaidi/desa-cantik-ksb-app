@@ -28,7 +28,7 @@
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item">
-                                <a href="{{route('tambah_data_kecamatan_oleh_admin_app')}}" class="nav-link">
+                                <a href="{{route('tambah_data_desa_kelurahan_oleh_admin_app')}}" class="nav-link">
                                     <i class="nav-icon fas fa-plus"></i>
                                     <p>
                                         Tambah Data
@@ -63,7 +63,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Data Kecamatan</h5>
+                                        <h5 class="card-title">Data Desa/Kelurahan</h5>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                                 <i class="fas fa-minus"></i>
@@ -78,9 +78,10 @@
                                                     <thead>
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Kode Wilayah Kecamatan</th>
-                                                            <th>Nama Kecamatan</th>
-                                                            <th colspan="2">Nama Kabupaten</th>
+                                                            <th>Kode Wilayah Desa/Kelurahan</th>
+                                                            <th>Nama Desa/Kelurahan</th>
+                                                            <th colspan="2">Nama Kecamatan</th>
+                                                            <th>Nama Kabupaten</th>
                                                             <th colspan="2">Aksi</th>
                                                             <th></th>
                                                         </tr>
@@ -90,12 +91,13 @@
                                                         @foreach($DataTabel as $dt)
                                                             <tr>
                                                                 <td>{{$no++}}</td>
-                                                                <td>{{$dt->kode_wilayah_kecamatan}}</td>
+                                                                <td>{{$dt->kode_wilayah_desa_kelurahan}}</td>
+                                                                <td>{{$dt->nama_desa_kelurahan}}</td>
                                                                 <td>{{$dt->nama_kecamatan}}</td>
-                                                                <td>{{$dt->nama_kabupaten}}</td>
                                                                 <td>
-                                                                    <a href="javascript:void(0)" onclick="ubahDataKabupaten({{$dt->id}})" class="btn btn-warning btn-block btn-sm"><i class="fa fa-edit"></i></a>
+                                                                    <a href="javascript:void(0)" onclick="ubahDataKecamatan({{$dt->id}})" class="btn btn-warning btn-block btn-sm"><i class="fa fa-edit"></i></a>
                                                                 </td>
+                                                                <td>{{$dt->nama_kabupaten}}</td>
                                                                 <td>
                                                                     <a href="javascript:void(0)" onclick="ubahData({{$dt->id}})" class="btn btn-warning btn-block btn-sm"><i class="fa fa-edit"></i></a>
                                                                 </td>
@@ -104,7 +106,7 @@
                                                                 </td>
                                                                 <td></td>
                                                             </tr>
-                                                            <!-- Ubah Data Nama Kabupaten -->
+                                                            <!-- Ubah Data Nama Kecamatan -->
                                                             <div class="modal fade" id="Modal1">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
@@ -118,10 +120,10 @@
                                                                             <form id="Form1" action="" method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" id="id1"/>
-                                                                                <input type="hidden" id="id_kabupaten1"/>
+                                                                                <input type="hidden" id="id_kecamatan1"/>
                                                                                 <div class="input-group mb-3">
-                                                                                    <label>Nama Kabupaten</label>
-                                                                                    <select name="id_kabupaten" id="id_kabupaten_option" class="form-control" style="width: 100%;">
+                                                                                    <label>Nama Kecamatan</label>
+                                                                                    <select name="id_kecamatan" id="id_kecamatan_option" class="form-control" style="width: 100%;">
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-12">
@@ -134,49 +136,49 @@
                                                                 </div>
                                                             </div>
                                                             <script>
-                                                                function ubahDataKabupaten(id)
+                                                                function ubahDataKecamatan(id)
                                                                 {
-                                                                    $.get('/cari_id_kecamatan/'+id,function(data){
+                                                                    $.get('/cari_id_desa_kelurahan/'+id,function(data){
                                                                         $("#id1").val(data.id);
-                                                                        $("#id_kabupaten1").val(data.id_kabupaten);
+                                                                        $("#id_kecamatan1").val(data.id_kecamatan);
                                                                         $("#Modal1").modal('toggle');
                                                                     });
                                                                     $.ajax({
                                                                         type:"GET",
-                                                                        url:"/tampil_data_kabupaten_untuk_pilihan",
+                                                                        url:"/tampil_data_kecamatan_untuk_pilihan",
                                                                         dataType: 'JSON',
                                                                         success:function(res){
                                                                             if(res){
-                                                                                $("#id_kabupaten_option").empty();
-                                                                                $("#id_kabupaten_option").append('<option>---Pilih Kabupaten---</option>');
-                                                                                $.each(res,function(id,nama_kabupaten){
-                                                                                    $("#id_kabupaten_option").append('<option value="'+nama_kabupaten+'">'+nama_kabupaten+'-'+id+'</option>');
+                                                                                $("#id_kecamatan_option").empty();
+                                                                                $("#id_kecamatan_option").append('<option>---Pilih Kecamatan---</option>');
+                                                                                $.each(res,function(id,nama_kecamatan){
+                                                                                    $("#id_kecamatan_option").append('<option value="'+nama_kecamatan+'">'+nama_kecamatan+'-'+id+'</option>');
                                                                                 });
                                                                             }else{
-                                                                                $("#id_kabupaten_option").empty();
+                                                                                $("#id_kecamatan_option").empty();
                                                                             }
                                                                         }
                                                                     });
-                                                                    $('#id_kabupaten_option').change(function(){
+                                                                    $('#id_kecamatan_option').change(function(){
                                                                         var data_value = $(this).val();
-                                                                        $("#id_kabupaten1").val(data_value);
+                                                                        $("#id_kecamatan1").val(data_value);
                                                                     });
                                                                     $("#Form1").submit(function (e){
                                                                         e.preventDefault();
                                                                         let id = $("#id1").val();
-                                                                        let id_kabupaten = $("#id_kabupaten1").val();
+                                                                        let id_kecamatan = $("#id_kecamatan1").val();
                                                                         let _token = $("input[name=_token]").val();
                                                                         $.ajax({
-                                                                            url:"{{route('kecamatan.simpan_perubahan_data_kabupaten')}}",
+                                                                            url:"{{route('desa_kelurahan.simpan_perubahan_data_kecamatan')}}",
                                                                             type: "PUT",
                                                                             data:{
                                                                                 id:id,
-                                                                                id_kabupaten:id_kabupaten,
+                                                                                id_kecamatan:id_kecamatan,
                                                                                 _token:_token
                                                                             },
                                                                             success:function(response){
                                                                                 $("#Modal1").modal('hide');
-                                                                                window.location = "{{route('tampil_data_kecamatan_oleh_admin_app')}}";
+                                                                                window.location = "{{route('tampil_data_desa_kelurahan_oleh_admin_app')}}";
                                                                             }
                                                                         })
                                                                     })
@@ -196,13 +198,13 @@
                                                                             <form id="Form2" action="" method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" id="id2"/>
-                                                                                <label>Kode Wilayah Kecamatan *</label><br>
+                                                                                <label>Kode Wilayah Desa/Kelurahan *</label><br>
                                                                                 <div class="input-group mb-3">
-                                                                                    <input type="text" id="kode_wilayah_kecamatan2" class="form-control" required>
+                                                                                    <input type="text" id="kode_wilayah_desa_kelurahan2" class="form-control" required>
                                                                                 </div>
-                                                                                <label>Nama Kecamatan *</label><br>
+                                                                                <label>Nama Desa/Kelurahan *</label><br>
                                                                                 <div class="input-group mb-3">
-                                                                                    <input type="text" id="nama_kecamatan2" class="form-control" required>
+                                                                                    <input type="text" id="nama_desa_kelurahan2" class="form-control" required>
                                                                                 </div>
                                                                                 <div class="col-12">
                                                                                     <button type="submit" class="btn btn-primary btn-block">Simpan Perubahan Data</button>
@@ -215,30 +217,30 @@
                                                             <script>
                                                                 function ubahData(id)
                                                                 {
-                                                                    $.get('/cari_id_kecamatan/'+id,function(data){
+                                                                    $.get('/cari_id_desa_kelurahan/'+id,function(data){
                                                                         $("#id2").val(data.id);
-                                                                        $("#kode_wilayah_kecamatan2").val(data.kode_wilayah_kecamatan);
-                                                                        $("#nama_kecamatan2").val(data.nama_kecamatan);
+                                                                        $("#kode_wilayah_desa_kelurahan2").val(data.kode_wilayah_desa_kelurahan);
+                                                                        $("#nama_desa_kelurahan2").val(data.nama_desa_kelurahan);
                                                                         $("#Modal2").modal('toggle');
                                                                     })
                                                                     $("#Form2").submit(function (e){
                                                                         e.preventDefault();
                                                                         let id = $("#id2").val();
-                                                                        let kode_wilayah_kecamatan = $("#kode_wilayah_kecamatan2").val();
-                                                                        let nama_kecamatan = $("#nama_kecamatan2").val();
+                                                                        let kode_wilayah_desa_kelurahan = $("#kode_wilayah_desa_kelurahan2").val();
+                                                                        let nama_desa_kelurahan = $("#nama_desa_kelurahan2").val();
                                                                         let _token = $("input[name=_token]").val();
                                                                         $.ajax({
-                                                                            url:"{{route('kecamatan.simpan_perubahan_data')}}",
+                                                                            url:"{{route('desa_kelurahan.simpan_perubahan_data')}}",
                                                                             type: "PUT",
                                                                             data:{
                                                                                 id:id,
-                                                                                kode_wilayah_kecamatan:kode_wilayah_kecamatan,
-                                                                                nama_kecamatan:nama_kecamatan,
+                                                                                kode_wilayah_desa_kelurahan:kode_wilayah_desa_kelurahan,
+                                                                                nama_desa_kelurahan:nama_desa_kelurahan,
                                                                                 _token:_token
                                                                             },
                                                                             success:function(response){
                                                                                 $("#Modal2").modal('hide');
-                                                                                window.location = "{{route('tampil_data_kecamatan_oleh_admin_app')}}";
+                                                                                window.location = "{{route('tampil_data_desa_kelurahan_oleh_admin_app')}}";
                                                                             }
                                                                         })
                                                                     })
@@ -258,13 +260,13 @@
                                                                             <form id="Form3" action="" method="post">
                                                                                 @csrf
                                                                                 <input type="hidden" id="id3"/>
-                                                                                <label>Kode Wilayah Kecamatan *</label><br>
+                                                                                <label>Kode Wilayah Desa / Kelurahan *</label><br>
                                                                                 <div class="input-group mb-3">
-                                                                                    <input type="text" id="kode_wilayah_kecamatan3" class="form-control" disabled>
+                                                                                    <input type="text" id="kode_wilayah_desa_kelurahan3" class="form-control" disabled>
                                                                                 </div>
-                                                                                <label>Nama Kecamatan *</label><br>
+                                                                                <label>Nama Desa / Kelurahan *</label><br>
                                                                                 <div class="input-group mb-3">
-                                                                                    <input type="text" id="nama_kecamatan3" class="form-control" disabled>
+                                                                                    <input type="text" id="nama_desa_kelurahan3" class="form-control" disabled>
                                                                                 </div>
                                                                                 <div class="col-12">
                                                                                     <button type="submit" class="btn btn-primary btn-block">Hapus Data</button>
@@ -277,10 +279,10 @@
                                                             <script>
                                                                 function hapusData(id)
                                                                 {
-                                                                    $.get('/cari_id_kecamatan/'+id,function(data){
+                                                                    $.get('/cari_id_desa_kelurahan/'+id,function(data){
                                                                         $("#id3").val(data.id);
-                                                                        $("#kode_wilayah_kecamatan3").val(data.kode_wilayah_kecamatan);
-                                                                        $("#nama_kecamatan3").val(data.nama_kecamatan);
+                                                                        $("#kode_wilayah_desa_kelurahan3").val(data.kode_wilayah_desa_kelurahan);
+                                                                        $("#nama_desa_kelurahan3").val(data.nama_desa_kelurahan);
                                                                         $("#Modal3").modal('toggle');
                                                                     })
                                                                     $("#Form3").submit(function (e){
@@ -290,7 +292,7 @@
                                                                                 let id = $("#id3").val();
                                                                                 let _token = $("input[name=_token]").val();
                                                                                 $.ajax({
-                                                                                    url:"{{route('kecamatan.hapus_data')}}",
+                                                                                    url:"{{route('desa_kelurahan.hapus_data')}}",
                                                                                     type: "PUT",
                                                                                     data:{
                                                                                         id:id,
@@ -298,7 +300,7 @@
                                                                                     },
                                                                                     success:function(response){
                                                                                             $("#Modal3").modal('hide');
-                                                                                            window.location = "{{route('tampil_data_kecamatan_oleh_admin_app')}}";
+                                                                                            window.location = "{{route('tampil_data_desa_kelurahan_oleh_admin_app')}}";
                                                                                     }
                                                                                 })
                                                                             }

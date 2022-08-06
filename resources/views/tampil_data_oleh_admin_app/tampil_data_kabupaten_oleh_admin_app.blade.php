@@ -80,7 +80,8 @@
                                                             <th>No</th>
                                                             <th>Kode Wilayah Kabupaten</th>
                                                             <th>Nama Kabupaten</th>
-                                                            <th>Aksi</th>
+                                                            <th colspan="2">Aksi</th>
+                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -91,9 +92,12 @@
                                                                 <td>{{$dt->kode_wilayah_kabupaten}}</td>
                                                                 <td>{{$dt->nama_kabupaten}}</td>
                                                                 <td>
-                                                                    <a href="javascript:void(0)" onclick="ubahData({{$dt->id}})" class="btn btn-warning btn-block btn-sm">Ubah</a>
-                                                                    <a href="javascript:void(0)" onclick="hapusData({{$dt->id}})" class="btn btn-danger btn-block btn-sm">Hapus</a>
+                                                                    <a href="javascript:void(0)" onclick="ubahData({{$dt->id}})" class="btn btn-warning btn-block btn-sm"><i class="fa fa-edit"></i></a>
                                                                 </td>
+                                                                <td>
+                                                                    <a href="javascript:void(0)" onclick="hapusData({{$dt->id}})" class="btn btn-danger btn-block btn-sm"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                                <td></td>
                                                             </tr>
                                                             <!-- Ubah Data Kabupaten -->
                                                             <div class="modal fade" id="Modal1">

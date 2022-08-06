@@ -102,4 +102,10 @@ class KecamatanController extends Controller
             return view('login.login_admin_app');
         }
     }
+
+    public function tampil_data_kecamatan_untuk_pilihan(){
+        $data_kecamatan = DB::table('kecamatans')
+                            ->pluck('id','nama_kecamatan');
+        return response()->json($data_kecamatan);
+    }
 }

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminAppController;
+use App\Http\Controllers\DesaKelurahanController;
 use App\Http\Controllers\KabupatenController;
 use App\Http\Controllers\KecamatanController;
+use App\Models\DesaKelurahan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,4 +51,14 @@ Route::put('/simpan_perubahan_data_kecamatan_oleh_admin_app',[KecamatanControlle
 Route::put('/hapus_data_kecamatan_oleh_admin_app',[KecamatanController::class,'hapus_data_kecamatan_oleh_admin_app'])->name('kecamatan.hapus_data');
 Route::get('tambah_data_kecamatan_oleh_admin_app',[KecamatanController::class,'tambah_data_kecamatan_oleh_admin_app'])->name('tambah_data_kecamatan_oleh_admin_app');
 Route::post('simpan_data_kecamatan_baru_oleh_admin_app',[KecamatanController::class,'simpan_data_kecamatan_baru_oleh_admin_app'])->name('simpan_data_kecamatan_baru_oleh_admin_app');
+Route::get('/tampil_data_kecamatan_untuk_pilihan',[KecamatanController::class,'tampil_data_kecamatan_untuk_pilihan'])->name('tampil_data_kecamatan_untuk_pilihan');
+
+//Desa / Kelurahan
+Route::get('tampil_data_desa_kelurahan_oleh_admin_app',[DesaKelurahanController::class,'tampil_data_desa_kelurahan_oleh_admin_app'])->name('tampil_data_desa_kelurahan_oleh_admin_app');
+Route::get('/cari_id_desa_kelurahan/{id}',[DesaKelurahanController::class,'cari_id_desa_kelurahan']);
+Route::put('/simpan_perubahan_data_kecamatan_pada_data_desa_kelurahan_oleh_admin_app',[DesaKelurahanController::class,'simpan_perubahan_data_kecamatan_pada_data_desa_kelurahan_oleh_admin_app'])->name('desa_kelurahan.simpan_perubahan_data_kecamatan');
+Route::put('/simpan_perubahan_data_desa_kelurahan_oleh_admin_app',[DesaKelurahanController::class,'simpan_perubahan_data_desa_kelurahan_oleh_admin_app'])->name('desa_kelurahan.simpan_perubahan_data');
+Route::put('/hapus_data_desa_kelurahan_oleh_admin_app',[DesaKelurahanController::class,'hapus_data_desa_kelurahan_oleh_admin_app'])->name('desa_kelurahan.hapus_data');
+Route::get('tambah_data_desa_kelurahan_oleh_admin_app',[DesaKelurahanController::class,'tambah_data_desa_kelurahan_oleh_admin_app'])->name('tambah_data_desa_kelurahan_oleh_admin_app');
+Route::post('simpan_data_desa_kelurahan_baru_oleh_admin_app',[DesaKelurahanController::class,'simpan_data_desa_kelurahan_baru_oleh_admin_app'])->name('simpan_data_desa_kelurahan_baru_oleh_admin_app');
 

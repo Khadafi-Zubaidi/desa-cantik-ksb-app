@@ -19,7 +19,7 @@
                 <div class="sidebar">
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="{{asset('foto_admin_app')}}/{{$LoggedUserInfo->foto_admin_app}}" class="img-circle elevation-2" alt="Foto Admin">
+                            <img src="{{asset('foto_admin_app')}}/{{$LoggedUserInfo->foto_admin_app}}" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">{{$LoggedUserInfo->nama_admin_app}}</a>
@@ -28,45 +28,10 @@
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-database"></i>
+                                <a href="{{route('tampil_data_desa_kelurahan_oleh_admin_app')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-arrow-left"></i>
                                     <p>
-                                        Master Data
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="{{route('tampil_data_profil_admin_app_oleh_admin_app')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Profil</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('tampil_data_kabupaten_oleh_admin_app')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Kabupaten</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('tampil_data_kecamatan_oleh_admin_app')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Kecamatan</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('tampil_data_desa_kelurahan_oleh_admin_app')}}" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Desa/Kelurahan</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('logout_admin_app')}}" class="nav-link">
-                                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                                    <p>
-                                        Keluar Aplikasi
+                                        Sebelumnya
                                     </p>
                                 </a>
                             </li>
@@ -90,7 +55,7 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">Tentang Aplikasi</h5>
+                                        <h5 class="card-title">Pemasukan Data</h5>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                                 <i class="fas fa-minus"></i>
@@ -100,11 +65,34 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="card card-primary card-outline">
-                                                    <div class="card-body">
-                                                        <p class="text-muted">Aplikasi Desa Cantik adalah sebuah aplikasi untuk pengelolaan data-data Statistik Desa.</p>
+                                                <form action="{{route('simpan_data_desa_kelurahan_baru_oleh_admin_app')}}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <label>Nama Kecamatan *</label>
+                                                    <div class="input-group mb-3">
+                                                        <select name="id_kecamatan" class="form-control select2" style="width: 100%;">
+                                                            @foreach($DataKecamatan as $dt1)
+                                                                <option value="{{$dt1->id}}">{{$dt1->nama_kecamatan}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                                                </div>
+                                                    <label>Kode Wilayah Desa/Kelurahan *</label><br>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" name="kode_wilayah_desa_kelurahan" class="form-control @error('kode_wilayah_desa_kelurahan') is-invalid @enderror" value="{{ old('kode_wilayah_desa_kelurahan')}}" required>
+                                                        @error('kode_wilayah_desa_kelurahan')
+                                                            <div class="invalid-feedback">{{$message}}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <label>Nama Desa/Kelurahan *</label><br>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" name="nama_desa_kelurahan" class="form-control @error('nama_desa_kelurahan') is-invalid @enderror" value="{{ old('nama_desa_kelurahan')}}" required>
+                                                        @error('nama_desa_kelurahan')
+                                                            <div class="invalid-feedback">{{$message}}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="input-group mb-3">
+                                                        <button type="submit" class="btn btn-success btn-block">Simpan</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
